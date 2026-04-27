@@ -1,4 +1,4 @@
-# Frontend — React dApp
+# Front-end — React dApp
 
 Interface bilingual (Indonesia/English) untuk Panen Protocol. Dibangun dengan React + Vite + TypeScript + Tailwind CSS.
 
@@ -52,11 +52,13 @@ Sisanya otomatis:
 ## Struktur
 
 ```
-frontend/
+front-end/
 ├── src/
 │   ├── App.tsx
 │   ├── main.tsx
 │   ├── index.css
+│   ├── panen.json
+│   ├── vite.env.d.ts
 │   ├── components/
 │   │   ├── KoperasiPanel.tsx
 │   │   ├── MillPanel.tsx
@@ -84,14 +86,13 @@ frontend/
 │   │   └── useVerifikasi.ts
 │   ├── i18n/
 │   │   └── strings.ts
-│   ├── idl/
-│   │   └── panen.json
 │   └── utils/
 │       ├── hash.ts
 │       └── idr.ts
 ├── index.html
 ├── package.json
 ├── vite.config.ts
-├── tailwind.config.js
+├── tailwind.config.cjs
+├── postcss.config.cjs
 └── .env.example
 ```

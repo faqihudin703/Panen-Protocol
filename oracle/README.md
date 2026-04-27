@@ -20,14 +20,11 @@ npm install
 cp .env.example .env
 # Edit .env — isi RATE_ORACLE_PDA dan ORACLE_KEYPAIR path
 
-# 3. Init oracle (jika belum dilakukan via initialize.ts)
-yarn tsx src/init-oracle-only.ts
+# 3. Test push manual
+node src/index.js
 
-# 4. Test push manual
-yarn tsx src/index.ts --force
-
-# 5. Jalankan daemon via PM2
-pm2 start ecosystem.config.json
+# 4. Jalankan daemon via PM2
+pm2 start src/index.js
 pm2 save
 pm2 startup   # auto-start setelah reboot
 ```
@@ -50,31 +47,20 @@ Rate disimpan on-chain sebagai `idr_per_usdc × 10_000`:
 
 Rentang valid: 10,000–100,000 IDR/USDC (dikonfigurasi di `lib.rs`)
 
-## PM2 Config
-
-```json
-{
-  "name": "panen-push",
-  "script": "src/index.ts",
-  "interpreter": "tsx",
-  "cwd": "/path/to/oracle"
-}
-```
-
 ## Struktur
 
 ```
 oracle/
 ├── src/
-│   ├── index.ts          # Main daemon + cron scheduler
-│   ├── pusher.ts         # On-chain push logic
-│   ├── fetcher.ts        # Fetch rate dari BI / Frankfurter
-│   ├── oracle.ts         # Orchestrator
-│   └── init-oracle-only.ts  # Init oracle tanpa pool
+│   ├── index.js          # Main daemon + cron scheduler
+│   ├── pusher.js         # On-chain push logic
+│   ├── fetcher.js        # Fetch rate dari BI / Frankfurter
+│   ├── oracle.js         # Orchestrator
+│   ├── logger.js         # Logging
+│   └── db.js             # SQlite db untuk history
 ├── idl/
-│   └── panen.json        # Copy dari program/target/idl/
+│   └── panen.json
 ├── package.json
-├── tsconfig.json
-├── .env.example
-└── ecosystem.config.example.json
+├── push.json
+└── .env.example
 ```

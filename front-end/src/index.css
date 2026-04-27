@@ -1,0 +1,238 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { font-size: 16px; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #1a2e1a;
+    background-image:
+      radial-gradient(ellipse 110% 60% at 50% -5%,  rgba(163,230,53,0.13) 0%, transparent 58%),
+      radial-gradient(ellipse 55%  45% at 95% 85%,  rgba(217,119,6,0.07)  0%, transparent 50%),
+      radial-gradient(ellipse 45%  45% at 5%  90%,  rgba(56,189,248,0.05) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    min-height: 100vh;
+    color: #f0f2e8;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3,h4 { font-family: 'Fraunces', serif; }
+  code,pre     { font-family: 'DM Mono', monospace; }
+  * { box-sizing: border-box; }
+}
+
+@layer components {
+  /* ── Cards ── */
+  .card       { @apply rounded-2xl border p-6 bg-[#1f351f]/80 border-[#2d4a2d] backdrop-blur-sm; }
+  .card-lime  { @apply card border-lime/30  shadow-[0_4px_48px_rgba(163,230,53,0.07)]; }
+  .card-amber { @apply card border-amber/30 shadow-[0_4px_48px_rgba(217,119,6,0.07)];  }
+  .card-sky   { @apply card border-sky/30   shadow-[0_4px_48px_rgba(56,189,248,0.07)]; }
+
+  /* ── Inputs ── */
+  .input-field {
+    @apply w-full rounded-xl border px-4 py-3 text-sm font-mono
+           bg-[#152515] border-[#2d4a2d] text-[#f0f2e8]
+           placeholder:text-[#4a6b4a]
+           focus:outline-none focus:border-lime/60 focus:ring-2 focus:ring-lime/10
+           transition-all duration-150;
+  }
+  .input-error {
+    @apply input-field border-red-600/60 focus:border-red-500 focus:ring-red-500/10;
+  }
+  .label {
+    @apply flex items-center gap-1.5 text-[11px] font-mono text-[#7a9a6a]
+           uppercase tracking-[0.18em] mb-2;
+  }
+  .field-error {
+    @apply flex items-center gap-1.5 mt-1.5 text-xs font-mono text-red-400;
+  }
+
+  /* ── Buttons ── */
+  .btn-lime {
+    @apply inline-flex items-center justify-center gap-2
+           rounded-xl py-3 px-6 font-body font-semibold text-sm
+           bg-lime text-[#0f1f0f]
+           hover:bg-[#b8f040] hover:shadow-[0_0_24px_rgba(163,230,53,0.3)]
+           active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed
+           disabled:shadow-none transition-all duration-150;
+  }
+  .btn-amber {
+    @apply inline-flex items-center justify-center gap-2
+           rounded-xl py-3 px-6 font-body font-semibold text-sm
+           bg-amber text-[#0f1f0f]
+           hover:bg-[#e88a1a] hover:shadow-[0_0_24px_rgba(217,119,6,0.3)]
+           active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed
+           disabled:shadow-none transition-all duration-150;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           rounded-xl py-3 px-6 font-body font-medium text-sm
+           bg-transparent border border-[#3a5a3a] text-[#f0f2e8]/70
+           hover:border-lime/50 hover:text-[#f0f2e8] hover:bg-lime/5
+           active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed
+           transition-all duration-150;
+  }
+
+  /* ── Persona pills ── */
+  .persona-pill {
+    @apply flex items-center gap-3 rounded-2xl px-5 py-4 border
+           font-body font-medium text-sm cursor-pointer
+           transition-all duration-200 select-none w-full text-left;
+  }
+  .persona-pill-lime  { @apply persona-pill border-[#2d4a2d] bg-[#1f351f]/60 text-[#f0f2e8]/70 hover:border-lime/40 hover:bg-lime/10 hover:text-lime; }
+  .persona-pill-amber { @apply persona-pill border-[#2d4a2d] bg-[#1f351f]/60 text-[#f0f2e8]/70 hover:border-amber/40 hover:bg-amber/10 hover:text-amber; }
+  .persona-pill-active-lime  { @apply persona-pill border-lime  bg-lime/15  text-lime  shadow-[0_0_24px_rgba(163,230,53,0.2)] scale-[1.01]; }
+  .persona-pill-active-amber { @apply persona-pill border-amber bg-amber/15 text-amber shadow-[0_0_24px_rgba(217,119,6,0.2)]   scale-[1.01]; }
+
+  /* ── Badges ── */
+  .badge-lime  { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-mono font-medium bg-lime/15  text-lime  border border-lime/25; }
+  .badge-amber { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-mono font-medium bg-amber/15 text-amber border border-amber/25; }
+  .badge-sky   { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-mono font-medium bg-sky/15   text-sky   border border-sky/25; }
+  .badge-ok    { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-mono font-medium bg-lime/10  text-lime  border border-lime/20; }
+
+  .divider { @apply border-t border-[#2d4a2d] my-5; }
+}
+
+@keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+@keyframes slideUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+@keyframes glow    { 0%,100%{box-shadow:0 0 0 0 rgba(163,230,53,0.15)} 50%{box-shadow:0 0 0 10px rgba(163,230,53,0)} }
+@keyframes spin    { to{transform:rotate(360deg)} }
+
+.animate-fade-in  { animation: fadeIn  0.4s ease forwards; }
+.animate-slide-up { animation: slideUp 0.35s ease forwards; }
+.animate-glow     { animation: glow   2.5s ease-in-out infinite; }
+.animate-spin-slow { animation: spin  1.2s linear infinite; }
+/* ── Wallet Adapter Modal — full override ────────────────────────────────── */
+.wallet-adapter-modal-overlay {
+  background: rgba(0,0,0,0.7) !important;
+  backdrop-filter: blur(6px) !important;
+}
+.wallet-adapter-modal-wrapper {
+  background: #1a2e1a !important;
+  border: 1px solid rgba(100,180,70,0.2) !important;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6) !important;
+  padding: 2rem 1.5rem 1.5rem !important;
+  max-width: 380px !important;
+  width: calc(100vw - 2rem) !important;
+  gap: 0 !important;
+}
+.wallet-adapter-modal-wrapper-no-logo {
+  padding-top: 1.5rem !important;
+}
+.wallet-adapter-modal-title {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  margin-bottom: 1.5rem !important;
+  text-align: center !important;
+  display: block !important;
+}
+.wallet-adapter-modal-title::after {
+  content: "Hubungkan wallet Solana";
+  font-size: 1.375rem;
+  line-height: 1.3;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 700;
+  color: #e8f0e0;
+  display: block;
+  text-align: center;
+}
+body.lang-en .wallet-adapter-modal-title::after {
+  content: "Connect your Solana wallet";
+}
+.wallet-adapter-modal-list {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+}
+.wallet-adapter-modal-list li {
+  background: rgba(30,50,25,0.9) !important;
+  border: 1px solid rgba(100,160,70,0.2) !important;
+  border-radius: 0.875rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  transition: all 0.15s ease !important;
+  list-style: none !important;
+}
+.wallet-adapter-modal-list li:hover {
+  background: rgba(100,160,70,0.1) !important;
+  border-color: rgba(100,160,70,0.4) !important;
+  transform: translateX(2px) !important;
+}
+.wallet-adapter-modal-list .wallet-adapter-button {
+  width: 100% !important;
+  padding: 0.75rem 1rem !important;
+  height: auto !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0.875rem !important;
+  color: #d0e8c0 !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  justify-content: flex-start !important;
+  gap: 0.75rem !important;
+}
+.wallet-adapter-modal-list .wallet-adapter-button:hover {
+  background: transparent !important;
+  color: #e8f8d8 !important;
+}
+.wallet-adapter-modal-list .wallet-adapter-button-end-icon,
+.wallet-adapter-modal-list .wallet-adapter-button span:last-child {
+  margin-left: auto !important;
+  color: rgba(160,210,120,0.6) !important;
+  font-size: 0.75rem !important;
+  font-family: ui-monospace, monospace !important;
+}
+.wallet-adapter-modal-list li img,
+.wallet-adapter-modal-list .wallet-adapter-button img {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 6px !important;
+}
+.wallet-adapter-modal-list-more {
+  display: none !important;
+}
+.wallet-adapter-modal-middle {
+  display: none !important;
+}
+/* Close button */
+.wallet-adapter-modal-button-close {
+  background: rgba(30,50,25,0.9) !important;
+  border: 1px solid rgba(100,160,70,0.2) !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.wallet-adapter-modal-button-close:hover {
+  background: rgba(100,160,70,0.15) !important;
+}
+.wallet-adapter-modal-button-close svg {
+  fill: #7a9a6a !important;
+  width: 14px !important;
+  height: 14px !important;
+}
+/* WalletMultiButton di header */
+.wallet-adapter-button-trigger {
+  background: rgba(100,160,70,0.1) !important;
+  border: 1px solid rgba(100,160,70,0.25) !important;
+  border-radius: 0.625rem !important;
+  color: #b8d4a8 !important;
+  font-family: ui-monospace, monospace !important;
+  font-size: 0.7rem !important;
+  padding: 0 0.875rem !important;
+  height: 2.25rem !important;
+  transition: all 0.15s !important;
+}
+.wallet-adapter-button-trigger:hover {
+  background: rgba(100,160,70,0.18) !important;
+  border-color: rgba(100,160,70,0.45) !important;
+  color: #d0eac0 !important;
+}

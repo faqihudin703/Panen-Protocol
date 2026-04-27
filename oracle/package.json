@@ -1,0 +1,19 @@
+{
+  "name": "panen-oracle",
+  "version": "1.0.0",
+  "description": "Panen Protocol Rate Oracle Service — IDR/USDC dari Bank Indonesia",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev":   "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@anchor-lang/core":  "^1.0.0",
+    "@solana/web3.js":    "^1.95.3",
+    "axios":              "^1.7.9",
+    "dotenv":             "^16.4.7",
+    "xml2js":             "^0.6.2",
+    "better-sqlite3":     "^11.7.0",
+    "node-cron":          "^3.0.3"
+  }
+}

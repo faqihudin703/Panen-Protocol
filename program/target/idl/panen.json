@@ -1,0 +1,1951 @@
+{
+  "address": "Co2fcVRVsGM4ZNGd5UMFVxdAvoRcpqoSpCvgdJzEUTjj",
+  "metadata": {
+    "name": "panen",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Panen Protocol - On-chain agricultural receivables finance"
+  },
+  "instructions": [
+    {
+      "name": "accept_agreement",
+      "discriminator": [
+        69,
+        99,
+        1,
+        250,
+        152,
+        135,
+        196,
+        160
+      ],
+      "accounts": [
+        {
+          "name": "mill",
+          "signer": true
+        },
+        {
+          "name": "agreement",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  114,
+                  101,
+                  101,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mill"
+              },
+              {
+                "kind": "account",
+                "path": "agreement.koperasi",
+                "account": "AgreementAccount"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "cancel_proposal",
+      "discriminator": [
+        106,
+        74,
+        128,
+        146,
+        19,
+        65,
+        39,
+        23
+      ],
+      "accounts": [
+        {
+          "name": "koperasi",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "agreement",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  114,
+                  101,
+                  101,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "agreement.mill",
+                "account": "AgreementAccount"
+              },
+              {
+                "kind": "account",
+                "path": "koperasi"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "close_rejected_receipt",
+      "discriminator": [
+        42,
+        54,
+        241,
+        95,
+        45,
+        104,
+        230,
+        59
+      ],
+      "accounts": [
+        {
+          "name": "koperasi",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "receipt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  101,
+                  105,
+                  112,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "receipt.agreement",
+                "account": "DeliveryReceipt"
+              },
+              {
+                "kind": "account",
+                "path": "receipt.nonce_snapshot",
+                "account": "DeliveryReceipt"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_advance",
+      "discriminator": [
+        76,
+        119,
+        215,
+        155,
+        51,
+        108,
+        20,
+        23
+      ],
+      "accounts": [
+        {
+          "name": "koperasi",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "agreement",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  114,
+                  101,
+                  101,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "agreement.mill",
+                "account": "AgreementAccount"
+              },
+              {
+                "kind": "account",
+                "path": "koperasi"
+              }
+            ]
+          }
+        },
+        {
+          "name": "receipt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  101,
+                  105,
+                  112,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "agreement"
+              },
+              {
+                "kind": "account",
+                "path": "receipt.nonce_snapshot",
+                "account": "DeliveryReceipt"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pool",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          },
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "koperasi_ata",
+          "writable": true
+        },
+        {
+          "name": "advance",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  100,
+                  118,
+                  97,
+                  110,
+                  99,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "receipt"
+              }
+            ]
+          }
+        },
+        {
+          "name": "rate_oracle",
+          "docs": [
+            "rate_oracle divalidasi lewat oracle_authority yang disimpan di pool._reserved[0..32]",
+            "Seeds: [rate_oracle, pool.oracle_authority()] — authority dari pool, bukan self-ref",
+            "Constraint: rate_oracle.authority == pool.oracle_authority() — mencegah oracle injection"
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  97,
+                  116,
+                  101,
+                  95,
+                  111,
+                  114,
+                  97,
+                  99,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deactivate_agreement",
+      "discriminator": [
+        152,
+        244,
+        166,
+        183,
+        16,
+        34,
+        209,
+        17
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "signer": true
+        },
+        {
+          "name": "agreement",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  114,
+                  101,
+                  101,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "agreement.mill",
+                "account": "AgreementAccount"
+              },
+              {
+                "kind": "account",
+                "path": "agreement.koperasi",
+                "account": "AgreementAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "koperasi_refund",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deposit_pool",
+      "discriminator": [
+        187,
+        244,
+        122,
+        76,
+        155,
+        46,
+        239,
+        194
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          },
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "authority_ata",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_pool",
+      "discriminator": [
+        95,
+        180,
+        10,
+        172,
+        84,
+        174,
+        232,
+        40
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "treasury"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_rate_oracle",
+      "discriminator": [
+        255,
+        251,
+        168,
+        149,
+        221,
+        229,
+        7,
+        47
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "rate_oracle",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  97,
+                  116,
+                  101,
+                  95,
+                  111,
+                  114,
+                  97,
+                  99,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "mill_confirm_cancel",
+      "discriminator": [
+        74,
+        185,
+        128,
+        253,
+        187,
+        163,
+        243,
+        62
+      ],
+      "accounts": [
+        {
+          "name": "mill",
+          "signer": true
+        },
+        {
+          "name": "agreement",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  114,
+                  101,
+                  101,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mill"
+              },
+              {
+                "kind": "account",
+                "path": "agreement.koperasi",
+                "account": "AgreementAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "receipt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  101,
+                  105,
+                  112,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "agreement"
+              },
+              {
+                "kind": "account",
+                "path": "receipt.nonce_snapshot",
+                "account": "DeliveryReceipt"
+              }
+            ]
+          }
+        },
+        {
+          "name": "koperasi_refund",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "mill_cosign_receipt",
+      "discriminator": [
+        163,
+        236,
+        107,
+        12,
+        237,
+        92,
+        15,
+        136
+      ],
+      "accounts": [
+        {
+          "name": "mill",
+          "signer": true
+        },
+        {
+          "name": "agreement",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  114,
+                  101,
+                  101,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mill"
+              },
+              {
+                "kind": "account",
+                "path": "agreement.koperasi",
+                "account": "AgreementAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "receipt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  101,
+                  105,
+                  112,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "agreement"
+              },
+              {
+                "kind": "account",
+                "path": "receipt.nonce_snapshot",
+                "account": "DeliveryReceipt"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "propose_agreement",
+      "discriminator": [
+        225,
+        187,
+        165,
+        37,
+        49,
+        191,
+        189,
+        11
+      ],
+      "accounts": [
+        {
+          "name": "koperasi",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "agreement",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  114,
+                  101,
+                  101,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "proposed_mill"
+              },
+              {
+                "kind": "account",
+                "path": "koperasi"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "proposed_mill",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "request_cancel_receipt",
+      "discriminator": [
+        200,
+        80,
+        56,
+        87,
+        247,
+        199,
+        193,
+        208
+      ],
+      "accounts": [
+        {
+          "name": "koperasi",
+          "signer": true
+        },
+        {
+          "name": "agreement",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  114,
+                  101,
+                  101,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "agreement.mill",
+                "account": "AgreementAccount"
+              },
+              {
+                "kind": "account",
+                "path": "koperasi"
+              }
+            ]
+          }
+        },
+        {
+          "name": "receipt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  101,
+                  105,
+                  112,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "agreement"
+              },
+              {
+                "kind": "account",
+                "path": "receipt.nonce_snapshot",
+                "account": "DeliveryReceipt"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "set_oracle_authority",
+      "docs": [
+        "Initialize pool. oracle_authority adalah keypair yang boleh push rate —",
+        "bisa sama atau berbeda dengan pool authority.",
+        "Disimpan di pool._reserved[0..32] tanpa mengubah LEN.",
+        "Set atau update oracle_authority di pool._reserved[0..32].",
+        "Dipanggil pool authority kapanpun, termasuk setelah upgrade dari pool lama."
+      ],
+      "discriminator": [
+        39,
+        155,
+        66,
+        106,
+        213,
+        226,
+        114,
+        174
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "oracle_authority",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "settle_advance",
+      "discriminator": [
+        189,
+        183,
+        80,
+        255,
+        63,
+        129,
+        200,
+        87
+      ],
+      "accounts": [
+        {
+          "name": "koperasi",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "advance",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  100,
+                  118,
+                  97,
+                  110,
+                  99,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "receipt"
+              }
+            ]
+          }
+        },
+        {
+          "name": "receipt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  101,
+                  105,
+                  112,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "receipt.agreement",
+                "account": "DeliveryReceipt"
+              },
+              {
+                "kind": "account",
+                "path": "receipt.nonce_snapshot",
+                "account": "DeliveryReceipt"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pool",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          },
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "treasury",
+          "writable": true,
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "koperasi_ata",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "submit_delivery_receipt",
+      "discriminator": [
+        189,
+        248,
+        246,
+        85,
+        79,
+        196,
+        197,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "koperasi",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "agreement",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  103,
+                  114,
+                  101,
+                  101,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "agreement.mill",
+                "account": "AgreementAccount"
+              },
+              {
+                "kind": "account",
+                "path": "koperasi"
+              }
+            ]
+          }
+        },
+        {
+          "name": "receipt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  99,
+                  101,
+                  105,
+                  112,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "agreement"
+              },
+              {
+                "kind": "account",
+                "path": "agreement.receipt_nonce",
+                "account": "AgreementAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "SubmitReceiptParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_rate",
+      "discriminator": [
+        24,
+        225,
+        53,
+        189,
+        72,
+        212,
+        225,
+        178
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "rate_oracle",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  97,
+                  116,
+                  101,
+                  95,
+                  111,
+                  114,
+                  97,
+                  99,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "idr_per_usdc",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw_pool",
+      "discriminator": [
+        190,
+        43,
+        148,
+        248,
+        68,
+        5,
+        215,
+        136
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          },
+          "relations": [
+            "pool"
+          ]
+        },
+        {
+          "name": "authority_ata",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "AdvancePool",
+      "discriminator": [
+        183,
+        72,
+        52,
+        1,
+        248,
+        231,
+        17,
+        0
+      ]
+    },
+    {
+      "name": "AgreementAccount",
+      "discriminator": [
+        214,
+        73,
+        214,
+        216,
+        140,
+        164,
+        250,
+        65
+      ]
+    },
+    {
+      "name": "DeliveryReceipt",
+      "discriminator": [
+        182,
+        244,
+        107,
+        176,
+        88,
+        233,
+        14,
+        57
+      ]
+    },
+    {
+      "name": "KoperasiAdvance",
+      "discriminator": [
+        129,
+        170,
+        253,
+        161,
+        70,
+        202,
+        134,
+        97
+      ]
+    },
+    {
+      "name": "RateOracle",
+      "discriminator": [
+        122,
+        53,
+        218,
+        216,
+        112,
+        230,
+        125,
+        96
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AgreementInactive",
+      "msg": "Agreement is not active"
+    },
+    {
+      "code": 6001,
+      "name": "AgreementPendingAcceptance",
+      "msg": "Agreement is still pending mill acceptance"
+    },
+    {
+      "code": 6002,
+      "name": "AgreementAlreadyAccepted",
+      "msg": "Agreement has already been accepted by mill"
+    },
+    {
+      "code": 6003,
+      "name": "UnauthorizedCancellation",
+      "msg": "Only koperasi can cancel a proposal before mill accepts"
+    },
+    {
+      "code": 6004,
+      "name": "CannotCancelAcceptedAgreement",
+      "msg": "Cannot cancel — mill has already accepted this agreement"
+    },
+    {
+      "code": 6005,
+      "name": "ZeroWeight",
+      "msg": "Weight cannot be zero"
+    },
+    {
+      "code": 6006,
+      "name": "ZeroPrice",
+      "msg": "Price per kg cannot be zero"
+    },
+    {
+      "code": 6007,
+      "name": "InvoiceValueMismatch",
+      "msg": "Invoice value does not equal weight_kg x price_per_kg"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidGpsCoordinates",
+      "msg": "GPS coordinates outside valid Indonesian region bounds"
+    },
+    {
+      "code": 6009,
+      "name": "UnauthorizedMill",
+      "msg": "Signer is not the mill registered in the agreement"
+    },
+    {
+      "code": 6010,
+      "name": "AlreadyMillSigned",
+      "msg": "Mill has already co-signed this receipt"
+    },
+    {
+      "code": 6011,
+      "name": "ReceiptRejected",
+      "msg": "Receipt was rejected by AI classifier — score >= 70"
+    },
+    {
+      "code": 6012,
+      "name": "UnauthorizedKoperasi",
+      "msg": "Signer is not the koperasi registered in the agreement"
+    },
+    {
+      "code": 6013,
+      "name": "ReceiptNotMillSigned",
+      "msg": "Receipt has not been co-signed by mill yet"
+    },
+    {
+      "code": 6014,
+      "name": "ReceiptNotReadyToAdvance",
+      "msg": "Receipt is not in ReadyToAdvance status"
+    },
+    {
+      "code": 6015,
+      "name": "ZeroAdvanceAmount",
+      "msg": "Advance amount is zero"
+    },
+    {
+      "code": 6016,
+      "name": "InsufficientPoolFunds",
+      "msg": "Insufficient USDC in advance pool vault"
+    },
+    {
+      "code": 6017,
+      "name": "InvalidKoperasiAta",
+      "msg": "Koperasi ATA mint mismatch or wrong owner"
+    },
+    {
+      "code": 6018,
+      "name": "KoperasiAtaCannotBeVault",
+      "msg": "Koperasi ATA cannot be the same as vault"
+    },
+    {
+      "code": 6019,
+      "name": "ReceiptNotActive",
+      "msg": "Receipt is not in AdvanceActive status"
+    },
+    {
+      "code": 6020,
+      "name": "AlreadySettled",
+      "msg": "Advance has already been settled"
+    },
+    {
+      "code": 6021,
+      "name": "UnauthorizedSettler",
+      "msg": "Only the submitting koperasi can settle this advance"
+    },
+    {
+      "code": 6022,
+      "name": "InsufficientRepaymentBalance",
+      "msg": "Koperasi ATA has insufficient USDC to repay"
+    },
+    {
+      "code": 6023,
+      "name": "CircularRepayment",
+      "msg": "Circular repayment: koperasi ATA cannot equal vault"
+    },
+    {
+      "code": 6024,
+      "name": "TreasuryCannotBeVault",
+      "msg": "Treasury cannot be the same as vault"
+    },
+    {
+      "code": 6025,
+      "name": "UnauthorizedPoolAuthority",
+      "msg": "Signer is not the pool authority"
+    },
+    {
+      "code": 6026,
+      "name": "InvalidMint",
+      "msg": "Token account mint does not match pool mint"
+    },
+    {
+      "code": 6027,
+      "name": "ArithmeticOverflow",
+      "msg": "Arithmetic overflow"
+    },
+    {
+      "code": 6028,
+      "name": "OracleNotActive",
+      "msg": "Rate oracle is not active"
+    },
+    {
+      "code": 6029,
+      "name": "OracleZeroRate",
+      "msg": "Rate oracle IDR/USDC rate is out of valid range"
+    },
+    {
+      "code": 6030,
+      "name": "UnauthorizedOracleAuthority",
+      "msg": "Signer is not the rate oracle authority"
+    },
+    {
+      "code": 6031,
+      "name": "OracleAuthorityMismatch",
+      "msg": "Rate oracle authority does not match pool oracle_authority"
+    },
+    {
+      "code": 6032,
+      "name": "ReceiptNotCloseable",
+      "msg": "Receipt cannot be closed in current status"
+    },
+    {
+      "code": 6033,
+      "name": "AdvanceNotSettled",
+      "msg": "Advance must be settled before closing"
+    },
+    {
+      "code": 6034,
+      "name": "WithdrawExceedsAvailable",
+      "msg": "Withdraw amount exceeds available pool funds"
+    },
+    {
+      "code": 6035,
+      "name": "ZeroWithdrawAmount",
+      "msg": "Withdraw amount cannot be zero"
+    },
+    {
+      "code": 6036,
+      "name": "CancellationRequiresBothParties",
+      "msg": "Receipt cancellation requires both koperasi and mill to agree"
+    },
+    {
+      "code": 6037,
+      "name": "ReceiptAlreadyCancelled",
+      "msg": "Receipt is already cancelled"
+    }
+  ],
+  "types": [
+    {
+      "name": "AdvancePool",
+      "docs": [
+        "Seeds: [b\"pool\", authority] — LEN: 222 (TIDAK BERUBAH)",
+        "",
+        "_reserved layout (64 bytes):",
+        "[0..32]  = oracle_authority: Pubkey — authority yang boleh push rate",
+        "[32..64] = sisa reserved, masih kosong",
+        "",
+        "oracle_authority diisi saat initialize_pool.",
+        "Ini memungkinkan pool authority dan oracle authority BERBEDA keypair",
+        "tanpa mengubah LEN atau discriminator."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "lp_yield_bps",
+            "type": "u16"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "treasury",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_deposited",
+            "type": "u64"
+          },
+          {
+            "name": "total_advanced",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "vault_bump",
+            "type": "u8"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "AgreementAccount",
+      "docs": [
+        "Seeds: [b\"agreement\", mill, koperasi] — LEN: 154"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mill",
+            "type": "pubkey"
+          },
+          {
+            "name": "koperasi",
+            "type": "pubkey"
+          },
+          {
+            "name": "active",
+            "type": "bool"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "receipt_nonce",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "DeliveryReceipt",
+      "docs": [
+        "Seeds: [b\"receipt\", agreement, nonce_snapshot.to_le_bytes()] — LEN: 229"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "agreement",
+            "type": "pubkey"
+          },
+          {
+            "name": "koperasi",
+            "type": "pubkey"
+          },
+          {
+            "name": "weight_kg",
+            "type": "u64"
+          },
+          {
+            "name": "price_per_kg",
+            "type": "u64"
+          },
+          {
+            "name": "invoice_value_idr",
+            "type": "u64"
+          },
+          {
+            "name": "nonce_snapshot",
+            "type": "u64"
+          },
+          {
+            "name": "invoice_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "gps_lat",
+            "type": "i64"
+          },
+          {
+            "name": "gps_lon",
+            "type": "i64"
+          },
+          {
+            "name": "fraud_score",
+            "type": "u8"
+          },
+          {
+            "name": "mill_signed",
+            "type": "bool"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "ReceiptStatus"
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "cancel_requested_kop",
+            "type": "bool"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "KoperasiAdvance",
+      "docs": [
+        "Seeds: [b\"advance\", receipt] — LEN: 180"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "receipt",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "koperasi",
+            "type": "pubkey"
+          },
+          {
+            "name": "advance_amount",
+            "type": "u64"
+          },
+          {
+            "name": "disbursed_at",
+            "type": "i64"
+          },
+          {
+            "name": "due_at",
+            "type": "i64"
+          },
+          {
+            "name": "idr_per_usdc_raw",
+            "type": "u64"
+          },
+          {
+            "name": "settled",
+            "type": "bool"
+          },
+          {
+            "name": "settled_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RateOracle",
+      "docs": [
+        "Seeds: [b\"rate_oracle\", authority] — LEN: 90"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "idr_per_usdc",
+            "type": "u64"
+          },
+          {
+            "name": "last_updated",
+            "type": "i64"
+          },
+          {
+            "name": "is_active",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReceiptStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "PendingMillSign"
+          },
+          {
+            "name": "ReadyToAdvance"
+          },
+          {
+            "name": "AdvanceActive"
+          },
+          {
+            "name": "Settled"
+          },
+          {
+            "name": "Rejected"
+          },
+          {
+            "name": "Cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SubmitReceiptParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "weight_kg",
+            "type": "u64"
+          },
+          {
+            "name": "price_per_kg",
+            "type": "u64"
+          },
+          {
+            "name": "invoice_value_idr",
+            "type": "u64"
+          },
+          {
+            "name": "invoice_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "gps_lat",
+            "type": "i64"
+          },
+          {
+            "name": "gps_lon",
+            "type": "i64"
+          },
+          {
+            "name": "fraud_score",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}

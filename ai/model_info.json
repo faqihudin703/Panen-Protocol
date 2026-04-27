@@ -1,0 +1,58 @@
+{
+  "model_type": "XGBoost",
+  "features": [
+    "yield_per_ha",
+    "price_deviation_pct",
+    "math_consistent",
+    "gps_in_valid_zone",
+    "is_peak_month",
+    "weight_kg",
+    "farm_area_ha",
+    "price_per_kg",
+    "delivery_month",
+    "delivery_year"
+  ],
+  "fraud_threshold": 0.7,
+  "n_samples": 100000,
+  "n_train": 70040,
+  "n_val": 14960,
+  "n_test": 15000,
+  "test_metrics": {
+    "name": "XGBoost",
+    "precision": 0.9993,
+    "recall": 0.9607,
+    "f1": 0.9796,
+    "roc_auc": 0.9831,
+    "ap": 0.9785
+  },
+  "cv_f1_mean": 0.9792,
+  "cv_f1_std": 0.0014,
+  "best_threshold_by_f1": 0.567,
+  "domain_thresholds": {
+    "yield_per_ha_max_normal": 4.2,
+    "yield_per_ha_suspicious": 6.0,
+    "yield_per_ha_reject": 10.0,
+    "price_per_kg_normal_min": 2077,
+    "price_per_kg_normal_max": 3544
+  },
+  "data_sources": [
+    "Ditjen Perkebunan \u2014 Analisis Kinerja Perdagangan Kelapa Sawit 2024 & 2025",
+    "APKASINDO \u2014 Harga TBS 2024-2025 (25 provinsi)",
+    "sawitindonesia.com \u2014 penetapan harga mingguan per provinsi",
+    "mediacenter.riau.go.id \u2014 penetapan harga mingguan Riau",
+    "BPS \u2014 Statistik Kelapa Sawit Indonesia 2023"
+  ],
+  "fraud_patterns": [
+    "yield_inflation",
+    "price_manipulation",
+    "arithmetic_fraud",
+    "invalid_gps",
+    "offseason_spike",
+    "combined_yield_price",
+    "micro_farm_mega_weight"
+  ],
+  "price_real_records": 624,
+  "price_sources": {
+    "ditjenbun": 624
+  }
+}

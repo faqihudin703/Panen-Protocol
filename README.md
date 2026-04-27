@@ -81,14 +81,14 @@ yarn tsx scripts/deposit.ts 1000
 cd ai
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-python train.py   # generate model/classifier.pkl
+python Model_Training.py   # generate model/classifier.pkl
 cp .env.example .env
 pm2 start ecosystem.config.json
 ```
 
 → Lihat [ai/README.md](ai/README.md) untuk detail
 
-### 3. Backend KYC
+### 3. Back-end KYC
 
 ```bash
 cd backend
@@ -111,7 +111,7 @@ pm2 start ecosystem.config.json
 
 → Lihat [oracle/README.md](oracle/README.md) untuk detail
 
-### 5. Frontend
+### 5. Front-end
 
 ```bash
 cd frontend
@@ -169,9 +169,9 @@ npm run build
 
 ## Built By
 
-**Harits Faqihuddin (Frozky)** · [Santara Labs](https://santaralabs.xyz) · Cirebon, Indonesia
+**Harits Faqihuddin (Frozky)** · **Santara Labs** · Cirebon, Indonesia
 
-Superteam Indonesia · Semester 6 Informatics, UIN Siber Syekh Nurjati Cirebon
+Semester 6 Informatics, UIN Siber Syekh Nurjati Cirebon
 
 ---
 

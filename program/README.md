@@ -63,11 +63,7 @@ yarn tsx scripts/deposit.ts 1000
 |---|---|
 | `initialize.ts` | Setup lengkap: oracle + pool + set rate awal |
 | `deposit.ts <amount>` | Deposit USDC ke advance pool |
-| `withdraw.ts <amount>` | Tarik USDC dari pool (hanya available) |
 | `update-rate.ts` | Push rate IDR/USDC terbaru dari Bank Indonesia |
-| `setup-demo.ts` | Setup agreement antara demo-mill dan demo-koperasi |
-| `set-oracle-authority.ts` | Update oracle authority (untuk rotasi keypair) |
-| `init-oracle-only.ts` | Init oracle saja tanpa pool |
 
 ## Instruksi On-chain
 
@@ -95,21 +91,18 @@ yarn tsx scripts/deposit.ts 1000
 
 ```
 program/
-├── programs/panen/src/
+├── programs/panen-program/src/
 │   └── lib.rs           # Program utama (semua instruksi)
 ├── scripts/
 │   ├── config.ts        # Shared config + PDA derivations
 │   ├── initialize.ts    # One-time setup
 │   ├── deposit.ts
-│   ├── withdraw.ts
 │   ├── update-rate.ts
-│   ├── setup-demo.ts
-│   ├── set-oracle-authority.ts
-│   └── init-oracle-only.ts
 ├── target/idl/
 │   └── panen.json       # Generated setelah anchor build
 ├── Anchor.toml
 ├── Cargo.toml
 ├── package.json
+├── yarn.lock
 └── .env.example
 ```

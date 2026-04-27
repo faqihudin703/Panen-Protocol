@@ -10,7 +10,7 @@ REST API untuk registrasi dan verifikasi identitas koperasi, mill, dan petani. D
 ## Setup
 
 ```bash
-cd backend
+cd back-end
 
 # 1. Install dependencies
 npm install

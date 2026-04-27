@@ -6,17 +6,17 @@ XGBoost classifier untuk deteksi anomali pada invoice pengiriman TBS (Tandan Bua
 
 | Service | File | Port | Fungsi |
 |---|---|---|---|
-| `panen-model` | `model_server.py` | 4687 | Inference endpoint |
-| `panen-relay-telegram` | `relay_server.py` | 4688 | Notifikasi Telegram |
+| `panen-model` | `model_server.py` | 5049 | Inference endpoint |
+| `panen-relay-telegram` | `relay_server.py` | 5050 | Relay endpoint & Notifikasi Telegram |
 
 ## Model
 
 - **Type:** XGBoostClassifier
 - **F1 Score:** 0.9815
-- **Threshold:** 0.628 (probability) → 62.8 (score integer)
+- **Threshold:** 0.628 (probability) -> 62.8 (score integer)
 - **On-chain threshold:** 70 — invoice dengan score ≥ 70 ditolak otomatis di program
 
-File `model/classifier.pkl` tidak disertakan di repo karena ukuran. Generate dari notebook:
+File `model.pkl` tidak disertakan di repo karena ukuran. Generate dari notebook:
 
 ```bash
 # Install dependencies
@@ -25,12 +25,8 @@ source venv/bin/activate      # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
 # Generate model
-jupyter notebook training_pipeline.ipynb
-# atau
-python train.py
+python Model_Training.py
 ```
-
-Lihat `model_info.json` untuk detail fitur, performa, dan format request.
 
 ## Setup
 
@@ -46,7 +42,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # 4. Generate model (wajib sebelum jalankan service)
-python train.py
+python Model_Training.py
 
 # 5. Buat folder log
 mkdir -p log
@@ -55,9 +51,7 @@ mkdir -p log
 cp ecosystem.config.example.json ecosystem.config.json
 # Edit ecosystem.config.json — sesuaikan cwd dan env variables
 
-# 7. Copy environment
-cp .env.example .env
-# Edit .env — isi TELEGRAM_BOT_TOKEN dan TELEGRAM_CHAT_ID
+# 7. edit relay_server.py, isi TELEGRAM_BOT_TOKEN dan TELEGRAM_CHAT_ID
 
 # 8. Jalankan via PM2
 pm2 start ecosystem.config.json
@@ -66,7 +60,7 @@ pm2 save
 
 ## API
 
-### `POST /verify` (port 4687)
+### `POST /verify` (port 5050)
 
 Request:
 ```json
@@ -99,14 +93,9 @@ Response:
 ```
 ai/
 ├── model_server.py              # FastAPI inference server
-├── relay_server.py              # Telegram relay server
-├── train.py                     # Script training model
-├── training_pipeline.ipynb      # Notebook training + evaluasi
-├── model_info.json              # Metadata model (tanpa file .pkl)
+├── relay_server.py              # Relay server & Telegram notification
+├── Model_Training.py            # Script training + evaluasi model
+├── model_info.json              # Metadata model
 ├── requirements.txt
-├── .env.example
-├── ecosystem.config.example.json
-├── model/
-│   └── classifier.pkl           # Generated — tidak di repo
-└── log/                         # Generated — tidak di repo
+└── ecosystem.config.example.json
 ```

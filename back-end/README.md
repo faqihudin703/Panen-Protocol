@@ -75,17 +75,13 @@ pm2 save
 ## Struktur
 
 ```
-backend/
+back-end/
 ├── src/
-│   ├── index.ts (atau app.js)
-│   ├── routes/
-│   │   └── kyc.ts
-│   ├── models/
-│   │   └── kyc.ts
-│   └── middleware/
-├── migrations/
-│   └── 001_create_kyc_tables.sql
+│   ├── index.js
+│   ├── db.js
+│   ├── routes.js
+│   ├── validators.js
+│   └── migrate.js
 ├── package.json
-├── .env.example
-└── ecosystem.config.example.json
+└── .env.example
 ```

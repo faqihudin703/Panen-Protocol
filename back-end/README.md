@@ -1,4 +1,4 @@
-# Backend — KYC Service
+# Back-end — KYC Service
 
 REST API untuk registrasi dan verifikasi identitas koperasi, mill, dan petani. Dibangun dengan Node.js + Express + MySQL.
 

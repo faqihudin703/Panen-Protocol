@@ -52,8 +52,8 @@ Mill pays invoice → Cooperative repays 80% + 3.5% fee → Pool
 ```
 panen-protocol/
 ├── program/     # Anchor/Rust smart contract + TypeScript scripts
-├── frontend/    # React + Vite + TypeScript dApp (bilingual ID/EN)
-├── backend/     # KYC service (Node.js + Express + MySQL)
+├── front-end/    # React + Vite + TypeScript dApp (bilingual ID/EN)
+├── back-end/     # KYC service (Node.js + Express + MySQL)
 ├── ai/          # Invoice classifier (FastAPI + XGBoost)
 ├── oracle/      # IDR/USDC rate oracle push service (Node.js)
 └── README.md
@@ -91,14 +91,14 @@ pm2 start ecosystem.config.json
 ### 3. Back-end KYC
 
 ```bash
-cd backend
+cd back-end
 npm install
 cp .env.example .env   # isi DB credentials
 npm run migrate
 pm2 start ecosystem.config.json
 ```
 
-→ Lihat [backend/README.md](backend/README.md) untuk detail
+→ Lihat [back-end/README.md](back-end/README.md) untuk detail
 
 ### 4. Oracle Push
 
@@ -114,13 +114,13 @@ pm2 start ecosystem.config.json
 ### 5. Front-end
 
 ```bash
-cd frontend
+cd front-end
 npm install
 cp .env.example .env   # isi VITE_POOL_AUTHORITY_PUBKEY
 npm run build
 ```
 
-→ Lihat [frontend/README.md](frontend/README.md) untuk detail
+→ Lihat [front-end/README.md](front-end/README.md) untuk detail
 
 ---
 

@@ -11,7 +11,7 @@ Interface bilingual (Indonesia/English) untuk Panen Protocol. Dibangun dengan Re
 ## Setup
 
 ```bash
-cd frontend
+cd front-end
 
 # 1. Install dependencies
 npm install
